@@ -1,0 +1,333 @@
+     /**Define the toolbar styles*/
+    .x-btn-inner{
+		background-position:0 0;
+		background-repeat:no-repeat;
+		font-size:13px;
+		font-weight:bold;
+		color:#474665;
+		padding-left: 40px ;
+		}
+		
+	.node {
+		background-image:url(../images/node.png);
+		}
+	.link {
+		background-image:url(../images/link.png);
+		}
+	.zoomin {
+		background-image:url(../images/zoomin.png);
+		}
+	.zoomout{
+		background-image:url(../images/zoomout.png);
+		}
+	.pan {
+		background-image:url(../images/pan.png);
+		}
+	.tools {
+		background-image:url(../images/tools.png);
+		}
+	.links {
+		background-image:url(../images/links.png);
+		}
+	.help {
+		background-image:url(../images/help.png);
+		}
+	.filter {
+		background-image:url(../images/find.png);
+	}
+	.remove {
+		background-image:url(../images/delete.png);
+	}
+	
+	.zoomslider {
+	   	 background-image: url(../images/ticks.gif);
+	   	 background-repeat:no-repeat;
+	   	 background-position:0 20px;
+	   	 background-color:transparent;
+	}
+/** following were moved from original d3ext.html */	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**default style for path**/
+path{
+  fill: none;
+  /** stroke:grey; */
+}
+
+marker {
+	stroke-width:2px;
+}
+marker .decreases {
+  fill: blue;
+}
+.decreases{
+  stroke: blue ;
+    stroke-width: 2px;
+}
+
+marker .beinguptaken {
+  fill: lightsalmon;
+}
+.beinguptaken 
+ {
+  fill:none;
+  stroke:lightsalmon;
+  stroke-width: 2px;
+  /**stroke-dasharray: 0,2 1; */
+}
+marker .inhibits {
+  fill: lightgreen;
+}
+.inhibits
+{
+	stroke-width: 2px;
+    stroke: lightgreen;
+}
+marker .stimulats {
+  fill: mediumpurple;
+}
+.stimulats 
+ {
+  stroke-width: 2px;
+  fill:none;
+  stroke:mediumpurple;
+}
+/**  association shouldn't have arrow
+ marker .association {
+  fill: grey;
+}
+*/
+.association{
+  stroke-width: 2px;
+  /** stroke-dasharray: 5,1 5,1; */
+  stroke:grey;
+}
+marker .physical_interaction {
+  fill: olive;
+}
+.physical_interaction {
+	stroke-width: 2px;
+    stroke: olive ;
+}
+marker .predicted {
+  fill: grey;
+}
+.predicted {
+  stroke-width: 1px;
+  fill:none;
+  stroke:grey;
+  /**stroke-dasharray: 0,2 1; */
+}
+.phosphorylates_activates {
+  stroke-width: 2px;
+  fill:none;
+  stroke:green;
+  /** stroke-dasharray: 0,2 1; */
+	
+}
+marker .activates {
+  fill: dodgerblue;
+}
+.activates {
+	  stroke-width: 2px;
+  /**stroke-dasharray: 4,5 2; */
+  stroke:dodgerblue;
+}
+marker .regulates {
+  fill: brown;
+}
+.regulates {
+      stroke-width: 2px;
+  /** stroke-dasharray: 4,5 2; */
+  stroke:brown;
+}
+marker .pathway {
+  fill: lightpink;
+}
+.pathway { 
+  stroke-width: 2px;
+  /** stroke-dasharray: 1,2 3; */
+  stroke:lightpink;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #333;
+  stroke-width: 1px;
+  fill-opacity:0.5;
+  /** stroke-dasharray: 1,1 */
+}
+circle.loaded {
+   stroke-dasharray: none
+}
+circle.unloaded {
+}
+
+circle.small {
+  
+}
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+text.shadow {
+  stroke: #fff;
+  stroke-width: 3px;
+  stroke-opacity: .8;
+}
+
+
+.state-selected {  	
+  	fill:yellow;
+  	stroke:yellow;
+}
+path.state-selected {   
+    stroke:yellow;
+    stroke-width:2;
+    stroke-color:yellow;
+    fill:none
+}
+.state-highlight {
+    background-color:#ffff9c !important
+}
+circle.state-highlight {
+    stroke:#ffff9c;  
+    fill: #ffff9c;
+    fill-opacity:0.2;
+    stroke-width:4px;    
+}
+path.state-highlight {
+    stroke:#ffff9c;      
+    stroke-width:4px;
+}
+
+.state-error {   
+    color:red    
+}
+
+/**  HTML forms **/
+input.filterByNetwork {
+	margin-left:30px
+}
+input[type=text],select{
+  font-size:1.1em;
+  padding:3px
+} 
+
+
+#infopanel th {
+  color:#5f6b87;
+  font-weight:bold;
+  padding:5px;
+}
+#infopanel td {
+  padding:5px;
+}
+
+.mined-entity {
+    padding: 0px 2px;        
+}
+.clickable {
+	cursor:pointer;	
+	color: #132C99
+}
+.clickable:hover {
+	text-decoration:underline;
+	
+}
+.bio-term {
+  
+  color:darkblue;
+  font-style:italic;
+}
+
+
+#uploadbox {
+    padding:20px;
+    border:5px dashed #AAA;
+    margin:5px 0px;
+}
+#uploadbox.hover {
+    border:5px dashed #3d4253;    
+}
+
+#previewSummary span {
+    padding:0px 5px;
+}
+
+
+/** Ext Overrides */
+/** necessary to apply row style in the grid */
+.x-grid-row .x-grid-cell {
+  background-color: Transparent !important;
+}
+
+.network-spinner {
+	color:#3d4253;		
+}
+
+.x-grid-row-selected .x-grid-cell, .x-grid-row-selected .x-grid-rowwrap-div {
+	border-style: dotted;
+    border-color: #FFAB68; 
+    background-color: #E6FFA2 !important 
+}
+.x-form-item-label-top {
+  margin: 10px 0px 5px 0px;
+  font-weight:bold
+}
+.x-form-field {
+  font-size:large
+}
+
+
+
+
+
+
+textarea {
+  font-size:1.2em;
+  padding:4px;
+}
+
+.precon-form div {
+  margin-top:8px; margin-bottom:8px;
+}
+
+
+
+
+/**  Vote window */
+  
+.vote-summary {
+  height:24px;
+  
+}
+.vote-up {
+  background: url(/ext/resources/images/thumb-upx24.png) no-repeat;
+  padding-left:28px;
+}
+.vote-down {
+  background: url(/ext/resources/images/thumb-downx24.png) no-repeat;
+  padding-left:28px;
+}
+.vote-comments {
+  padding:5px 15px;
+}
+
+.date-time {
+  color: #666;
+}

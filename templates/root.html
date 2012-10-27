@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0034)/instant-qa/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Koala</title>
+<link rel="stylesheet" type="text/css" href="/tmpl/style.css"> 
+<!--[if IE]>
+<style type="text/css">
+ul.addtoany_list a img{filter:alpha(opacity=70)}
+ul.addtoany_list a:hover img,ul.addtoany_list a.addtoany_share_save img{filter:alpha(opacity=100)}
+</style>
+<![endif]-->
+<!--[if IE 6]>
+    <script src="http://wordpressqa.com/instant-qa/wp-content/themes/instant-qa/js/DD_belatedPNG_0.0.7a-min.js"></script>
+    <script>
+      DD_belatedPNG.fix('img, #main, #topNav');
+    </script>
+    <link rel="stylesheet" type="text/css" href="http://wordpressqa.com/instant-qa/wp-content/themes/instant-qa/styles-ie6.css"/>
+<![endif]--> 
+<!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="http://wordpressqa.com/instant-qa/wp-content/themes/instant-qa/styles-ie7.css"/>
+<![endif]--> 
+<style>
+* {
+    font-family:"tempus sans itc";    
+}
+div.outmost {
+    width:960px;
+    margin: 0px auto;
+}
+div.page {
+    width:960px;
+    
+    margin:0px auto;
+}
+h1 {
+    font-size:1.5em;
+}
+h2{
+    font-size:1.3em;
+}
+div#description {
+    width:70%
+}
+div.clear {
+    clear:both
+}
+div.field-title {
+    width:150px;
+    //font-weight:bold;
+    display:inline;
+    float:left
+}
+div.field {
+    float:left
+}
+div.forms {
+    margin-top:20px;
+    
+}
+
+div.tab-menuitem {
+    border:1px solid #888;
+    padding:10px 30px;
+    font-weight:bold;
+    height:25px;
+}
+#logo {
+    width:80px
+}
+
+table {
+    border:0px
+}
+.state-highlight {
+    background-color: #CCC
+}
+.state-hover {
+    background-color: #EEE
+}
+
+.instructions {
+  font-size:0.8em;
+  padding:10px;
+  
+}
+
+
+/** form fields */
+input[type=text] {
+  padding:2px 5px;
+  font-size:1.1em;
+  height:30px;
+}
+button {
+  height:35px;
+  font-size:1.2em;
+}
+
+</style>
+
+{% block css_include %} {% endblock %}
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+<script language="javascript" src="/ext/lib/modal.popup.js"></script>
+
+
+{% block js_include %} {% endblock %}
+
+</head>
+
+<body id="home">
+
+<div class="outmost">
+	{% block headernav %}
+	<div id="header">
+		<table id="topnav">
+		    <tr><td style="border:0px"><img id="logo" src="/static/images/bunny.png"></td>
+		    <td valign="middle"><div class="tab-menuitem">Home</div></td>
+		    <td valign="middle"><div class="tab-menuitem">How It Works</div></td>
+		    <td><div class="tab-menuitem">My Stuff</div></td>
+		    <td><div class="tab-menuitem">FAQ</div></td>
+		    <td><div class="tab-menuitem">Login</div></td>
+		    </tr>
+		</table>
+	</div>
+	{% endblock %}     
+	    
+	
+	{% block main %}
+	Main block
+	{% endblock %}
+	
+	{% block footer %}
+	<div  style="height:50px"> </div>
+	{% endblock %}
+	
+</div>
+</body></html>

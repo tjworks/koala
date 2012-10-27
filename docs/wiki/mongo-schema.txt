@@ -1,0 +1,7 @@
+Mongo Schema
+
+posts
+===================
+
+indexes
+-------

@@ -1,0 +1,7 @@
+Django==1.4.2
+django-guardian==1.0.4
+minimongo==0.2.7
+mongoengine==0.7.5
+pymongo==2.3
+requests==0.14.1
+wsgiref==0.1.2

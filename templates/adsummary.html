@@ -1,0 +1,53 @@
+ 
+<style>
+
+div.ad-summary{
+    border:1px solid #CCC;
+    padding:10px;
+}
+.ad-summary .image {
+    margin:5px 10px;
+}
+div.clear {
+    clear:both
+}
+ 
+.ad-summary span.field-title {
+    width:100px;
+    font-size:0.8em;
+    font-weight:bold
+}
+div.post-action {
+    float:right
+}
+td {
+    padding:4px
+}
+</style>  
+<div class="ad-summary"> 
+     <table border=0 width="100%">
+        <tr>
+            <td vatdgn="top">
+                <div class="image">
+			       {% if default_image %}    
+			           <img src="{{ default_image.full }}" width="200">
+			       {% endif %}
+			     </div>
+			     <div  class="post-title">{{ heading }}</div>
+            </td>
+            <td vatdgn="top">
+                {{ body }} 
+                
+		        <table>
+		            <tr><td><span class="field-title">Item Price</span>    </td><td>{{ price }} {{ currency }} </td></tr>
+		            <tr><td><span class="field-title">Price Negotiable?</span>    <span></span></td><td>Yes</td></tr>
+		            <tr><td><span class="field-title">Status</span>    <span></span></td><td>Available</td></tr>
+		            <tr><td><span class="field-title">Distance to pickup location</span>    <span></span></td><td>~2 miles</td></tr>
+		        </table>    
+            </td>
+        </tr>
+     </table>      
+      
+      
+</div><!-- end summary -->
+    

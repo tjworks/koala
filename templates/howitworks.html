@@ -1,0 +1,50 @@
+{% extends "root.html" %} 
+
+
+{% block main %}
+  
+<style>
+div.step{
+    padding:20px;
+}
+div.answer {
+    padding-left:40px;
+}
+div.question {
+    margin:10px
+}
+ 
+</style> 
+<div class="page howitworks"> 
+
+    Little Bunny is a freemium tool aimed at assisting casual seller and buyer to communicate and transact the for sale items such as those found on Craigslist or local classified  
+
+    <h3>How does it work?</h3>
+    <div class="step">
+        1. You post your ad at your favorite listing site, including a link(provided by Little Bunny)
+    </div>
+    <div class="step">
+        2. Potential buyer clicks the link, views the ad on Little Bunny's friendly site
+    </div>
+    
+     <div class="step">
+        3. You can manage your offer, confirm appointment etc in one place! All this is completely free, always!  
+    </div>
+ 
+    {% include "adsummary.html" %}
+    <!-- 
+    <h3>Questions and Answers</h3>
+    <div class="faq">
+        <div class="question">Why do I want to use Little Bunny as a casual seller?</div>
+        <div class="answer"> 
+            <ul>
+                <li>Spam filter: spammers are getting smarter. By using Little Bunny we shield spammers from you</li>                
+                <li>Too much a hassle to find a right time to meet the buyer? We help you with an innovative scheduling solution</li>
+                <li>Have a few items to sell? You will find the seller dashboard which shows a glance of all activities to be very handy!</li>
+                <li>Tired of the no-show buyer? We help you to avoid it by requesting a nominal deposit from buyer(we charge a nominal $1 to cover the credit card transaction fee)</li>                                
+        </div>
+    </div>
+     -->
+</div> <!--  end page -->
+
+{% endblock %}
