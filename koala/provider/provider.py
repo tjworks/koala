@@ -1,6 +1,8 @@
 from koala import application
+from koala.provider import harvester
 import logging,re
 logger = logging.getLogger(__name__)
+
 
 def getProvider(url):
     m = BaseProvider.__module__
@@ -29,4 +31,8 @@ class CraigslistProvider(BaseProvider):
         return None
     def accept(self):
         return self.getId()
+    def fetch(self, sourceId=None):
+        items = harvester.fetch(sourceId)
+        return items
+        
     

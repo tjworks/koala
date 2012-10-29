@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # search/proxy
     url(r'^activate/(?P<invite_id>.*)$', 'koala.adview.activate'),
 
+    #url('^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': 'static'}),
+    
     #url(r'^assets/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
     url(r'^(?P<path>.*.(css|js|png|gif|swf|jpg|html|htm|pdf|csv|json))$', 'django.views.static.serve', {'document_root': 'static'}),
 
@@ -38,6 +40,7 @@ urlpatterns = patterns('',
     url(r'^howto$', 'koala.views.home'),
 
 
+    
 
 
 

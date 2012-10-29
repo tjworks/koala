@@ -3,10 +3,14 @@ import logging,re,requests, json,uuid
 from koala.models import Post
 logger = logging.getLogger(__name__)
 
-threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=10&metroCode=USA-ATL&heading=MINI Cooper'
-
-def fetch():
-    r = requests.get(threeTaps)
+#threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=100&metroCode=USA-ATL&heading=MINI Cooper&annotations={source_subcat:cto}'
+threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=10'
+def fetch(sourceId=None):
+    url = threeTaps
+    if(sourceId): url = "%s&sourceId=%s" %(url, sourceId)
+    else: url = "%s&metroCode=USA-ATL&annotations={source_subcat:cta|cto}"
+    logger.debug("Fetching %s" %url)
+    r = requests.get(url)
     if (r.status_code != 200):
          logger.error("Failed to load request %s: status %s" %(url, r.status_code))
          return
@@ -15,24 +19,30 @@ def fetch():
     #a = u'\xa1'
     content = smart_str(r.text)
     obj = json.loads(content)
-    print "Got %s entries" %len(obj['results'])
+    source = "clst"
+    logger.debug( "Got %s entries" %len(obj['results']) )
+    ret = []
     for entry in obj['results']:
         if(not 'sourceId' in entry):
             logger.error("Invalid entry, missing sourceId: %s" %entry)
             continue
-        
-        post = Post.collection.find_one({'sourceId': entry['sourceId']})
+        _id =  "post%s%s" % (source, entry['sourceId'])
+        post = Post.collection.find_one({'_id': _id})
         if(not post): 
-            p = Post(entry)
-            p._id = "post%s" % (uuid.uuid1().hex)
-            p.source="craigslist"
-            p.fetched=True
-            delattr(p, 'html')
-            p.save()
-            logger.debug("Adding post: %s" %entry['sourceUrl'])
+            p = Post()
+            if('annotations' in entry and 'source_subcat' in entry['annotations'] and entry['annotations']['source_subcat']== 'cta|cto'):
+                p._id = _id
+                if('html' in entry):   del entry['html']
+                p.fetched=entry
+                p.sourceId = "%s" %(entry['sourceId'])
+                p.save()
+                ret.append(p)
+                logger.debug("Adding post: %s" %entry['sourceUrl'])
+            else:
+                logger.debug("Skip %s" %entry['sourceUrl'])
         else:
             logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
-
+    return ret
 """
 {
             "accountId": 1,
