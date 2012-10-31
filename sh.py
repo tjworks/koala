@@ -6,6 +6,10 @@ from koala.provider import harvester
 def fetch(**kwargs):
     reload(harvester)
     harvester.fetch(**kwargs)
+        
+def crawl(**kwargs):
+    reload(harvester)
+    harvester.crawl()        
 #we can change this one!
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "koala.settings")

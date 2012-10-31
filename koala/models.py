@@ -2,6 +2,7 @@ from minimongo import Model, Index
 from django.utils import unittest
 from koala import settings
 class Post(Model):
+    
     class Meta:
         # Here, we specify the database and collection names.
         # A connection to your DB is automatically created.
@@ -15,6 +16,10 @@ class Post(Model):
             Index("_id"),
         )
 
+    def __init__(self, initial=None, **kwargs):       
+        super(AttrDict, self).__init__()
+        
+        
 class PostTestCase(unittest.TestCase):
     def setUp(self):
         #self.lion = Animal.objects.create(name="lion", sound="roar")

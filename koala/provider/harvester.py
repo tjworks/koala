@@ -1,22 +1,27 @@
 from koala import application
 import logging,re,requests, json,uuid
 from koala.models import Post
+from myutil.dateutil import *
+import pymongo
+
 logger = logging.getLogger(__name__)
 
 #threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=100&metroCode=USA-ATL&heading=MINI Cooper&annotations={source_subcat:cto}'
-threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=10'
+threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&'
 def fetch(sourceId=None):
     url = threeTaps
     if(sourceId): url = "%s&sourceId=%s" %(url, sourceId)
     else: url = "%s&metroCode=USA-ATL&annotations={source_subcat:cta|cto}"
+    return _fetch(url)
+
+def _fetch(url):
     logger.debug("Fetching %s" %url)
     r = requests.get(url)
     if (r.status_code != 200):
          logger.error("Failed to load request %s: status %s" %(url, r.status_code))
-         return
+         return None
     
-    from django.utils.encoding import smart_str, smart_unicode
-    #a = u'\xa1'
+    from django.utils.encoding import smart_str, smart_unicode    
     content = smart_str(r.text)
     obj = json.loads(content)
     source = "clst"
@@ -26,23 +31,56 @@ def fetch(sourceId=None):
         if(not 'sourceId' in entry):
             logger.error("Invalid entry, missing sourceId: %s" %entry)
             continue
-        _id =  "post%s%s" % (source, entry['sourceId'])
-        post = Post.collection.find_one({'_id': _id})
-        if(not post): 
-            p = Post()
-            if('annotations' in entry and 'source_subcat' in entry['annotations'] and entry['annotations']['source_subcat']== 'cta|cto'):
-                p._id = _id
-                if('html' in entry):   del entry['html']
-                p.fetched=entry
-                p.sourceId = "%s" %(entry['sourceId'])
-                p.save()
-                ret.append(p)
-                logger.debug("Adding post: %s" %entry['sourceUrl'])
-            else:
-                logger.debug("Skip %s" %entry['sourceUrl'])
+        p = convert(entry)
+        if(p):
+            logger.debug("Adding post: %s" %entry['sourceUrl'])
+            ret.append(p)
         else:
             logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
     return ret
+
+def convert(entry):
+    """
+    Convert fetched data into model
+    """
+    #if('annotations' in entry and 'source_subcat' in entry['annotations'] and entry['annotations']['source_subcat']== 'cta|cto'):
+    source = "clst"
+    _id =  "post%s%s" % (source, entry['sourceId'])
+    p = Post.collection.find_one({'_id': _id})
+    if(not p):        
+        p=Post()
+        if('html' in entry):   del entry['html']            
+        p.sourceId = "%s" %(entry['sourceId'])
+        p.fetched = entry
+        p.ptm = getTime( entry['postingTimestamp'] )
+        p.ctm = getTime()
+        p._id = _id
+    return p
+
+def crawl():
+    """
+    - Query for all for sale items from 10/1, in USA-ATL
+    - Find the latest time stamp
+    - Query from that time stamp + 10 minutes, sleep 1 minute
+    """
+    start = "2012-10-01 00:00:00"
+    cursor = Post.collection.find({}, {'ptm':1}).sort('ptm', pymongo.DESCENDING).limit(1)
+    if(cursor):
+        d = cursor[0]
+        if('ptm' in d): start= d['ptm']
+        print "Starting time: %s" %start
+    else:
+        logger.debug("No record, starting from 10/1")  
+    logger.info("Requesting posts from %s  " %start)
+    start = getTime(start, DATE_TIMESTAMP) 
+    end = start + 60 * 60 # one hour      
+    url = "%s&start=%s&end=%s" %(threeTaps, start, end)    
+    res = _fetch(url)
+    if(res):
+        logger.info("Harvested %s items" %(len(res)))
+    else:
+        logger.info("Harvested 0 items")
+     
 """
 {
             "accountId": 1,
