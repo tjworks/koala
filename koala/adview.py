@@ -17,7 +17,7 @@ def activate(req, invite_id):
     if(not invite_id): 
         #check referer
         raise Exception("Missing invitation ID")
-        
+    logger.debug("Got invite id %s" %invite_id)
     post = Post.collection.find_one({'$or': [{'_id': invite_id}, {'sourceId':invite_id}]})
     
     if(not post):  
@@ -25,8 +25,11 @@ def activate(req, invite_id):
         pd = provider.CraigslistProvider()
         post = pd.fetch(invite_id)
         if(len(post)>0): post=post[0]
+        else: 
+            logger.debug("fetch failed")
         logger.debug("fetched from source")
-    
+    if(not post):
+        raise Exception("No post")
     if(not post.fetched):
         logger.debug("Fetching from source")
         raise Exception("Post not fetched yet: %s" %invite_id)

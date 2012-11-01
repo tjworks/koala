@@ -11,22 +11,26 @@ DATE_UTC_MILLIS = '%Y-%m-%dT%H:%M:%S.%fZ'
 DATE_TIMESTAMP = "%s"
 #9 >>> dt.microsecond
 
-def getTime(tm=None, format=DATE_SECONDS):
+def formatTime(tm=None, format=DATE_SECONDS):
+    #print("format time, source is %s, %s" %(tm, type(tm)) )
     tm = tm or datetime.utcnow()
     if type(tm) == float: tm= datetime.fromtimestamp(tm)
-    if type(tm) == str: 
-        try: tm = datetime.strptime(tm, DATE_UTC)
+    if isinstance( tm , basestring):
+        dtm = None 
+        try: dtm = datetime.strptime(tm, DATE_UTC)
         except: pass        
-        if(not tm):
-            try: tm = datetime.strptime(tm, DATE_SECONDS)
+        if(not dtm):
+            try: dtm = datetime.strptime(tm, DATE_SECONDS)
             except: pass
-        if(not tm):
-            try: tm = datetime.strptime(tm, DATE_MILLIS)
+        if(not dtm):
+            try: dtm = datetime.strptime(tm, DATE_MILLIS)
             except: pass
-                
-        raise "Unrecognized date string: %s" %tm 
+        if(not dtm):  raise Exception("Unrecognized date string: %s" %tm)
+        tm = dtm 
 
+    #print("tm %s" %tm)
     if(format == DATE_TIMESTAMP):
         return int(time.mktime(tm.timetuple()))
                          
     return tm.strftime(  format )
+

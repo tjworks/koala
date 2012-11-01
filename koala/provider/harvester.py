@@ -5,40 +5,63 @@ from myutil.dateutil import *
 import pymongo
 
 logger = logging.getLogger(__name__)
-
+PAGE_SIZE = 100
 #threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=100&metroCode=USA-ATL&heading=MINI Cooper&annotations={source_subcat:cto}'
-threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&'
+threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&metroCode=USA-ATL&categoryClass=SSSS&rpp=1&'
 def fetch(sourceId=None):
     url = threeTaps
     if(sourceId): url = "%s&sourceId=%s" %(url, sourceId)
-    else: url = "%s&metroCode=USA-ATL&annotations={source_subcat:cta|cto}"
-    return _fetch(url)
+    else: url = "%s&annotations={source_subcat:cta|cto}"
+    ret = []
+    _fetch(url, ret)
+    return ret
 
-def _fetch(url):
+def _fetch(url, ret):
+    # first get the count
+    obj = _load(url)
+    source = "clst"
+    logger.debug( "Total results %s" %(  obj['numResults']) )
+    
+    # default rpp size 100
+    total = obj['numResults']
+    pageno = 0
+    import math
+    while (  pageno < math.ceil(  float(total)/PAGE_SIZE ) ):  # page no less than total page no, 0 based
+        #page 0 already loaded, start from 1
+        logger.debug( "Loading page %s" %(pageno))
+        theurl = "%s&rpp=%s&page=%s" %(url, PAGE_SIZE, pageno)
+        obj = _load(theurl)
+        if(not obj):
+            logger.error("Failed to load!")
+            continue
+        
+        for entry in obj['results']:
+            if(not 'sourceId' in entry):
+                logger.error("Invalid entry, missing sourceId: %s" %entry)
+                continue
+            p = convert(entry)
+            if(p):
+                logger.debug("Adding post: %s" %entry['sourceUrl'])
+                p.save()
+                ret.append(p)
+            else:
+                logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
+        logger.debug("Sleeping a little")
+        time.sleep(5)
+        pageno = pageno +1
+                        
+    return ret
+def _load(url):
     logger.debug("Fetching %s" %url)
     r = requests.get(url)
     if (r.status_code != 200):
-         logger.error("Failed to load request %s: status %s" %(url, r.status_code))
-         return None
+        logger.error("Failed to load request %s: status %s" %(url, r.status_code))
+        return None
     
-    from django.utils.encoding import smart_str, smart_unicode    
+    from django.utils.encoding import smart_str    
     content = smart_str(r.text)
     obj = json.loads(content)
-    source = "clst"
-    logger.debug( "Got %s entries" %len(obj['results']) )
-    ret = []
-    for entry in obj['results']:
-        if(not 'sourceId' in entry):
-            logger.error("Invalid entry, missing sourceId: %s" %entry)
-            continue
-        p = convert(entry)
-        if(p):
-            logger.debug("Adding post: %s" %entry['sourceUrl'])
-            ret.append(p)
-        else:
-            logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
-    return ret
-
+    return obj
 def convert(entry):
     """
     Convert fetched data into model
@@ -52,8 +75,8 @@ def convert(entry):
         if('html' in entry):   del entry['html']            
         p.sourceId = "%s" %(entry['sourceId'])
         p.fetched = entry
-        p.ptm = getTime( entry['postingTimestamp'] )
-        p.ctm = getTime()
+        p.ptm = formatTime( entry['postingTimestamp'] )
+        p.ctm = formatTime()
         p._id = _id
     return p
 
@@ -63,23 +86,22 @@ def crawl():
     - Find the latest time stamp
     - Query from that time stamp + 10 minutes, sleep 1 minute
     """
-    start = "2012-10-01 00:00:00"
+    start = "2012-10-16 00:00:00"
     cursor = Post.collection.find({}, {'ptm':1}).sort('ptm', pymongo.DESCENDING).limit(1)
-    if(cursor):
+    if(cursor and cursor.count()>0):
         d = cursor[0]
         if('ptm' in d): start= d['ptm']
         print "Starting time: %s" %start
     else:
         logger.debug("No record, starting from 10/1")  
     logger.info("Requesting posts from %s  " %start)
-    start = getTime(start, DATE_TIMESTAMP) 
-    end = start + 60 * 60 # one hour      
-    url = "%s&start=%s&end=%s" %(threeTaps, start, end)    
-    res = _fetch(url)
-    if(res):
-        logger.info("Harvested %s items" %(len(res)))
-    else:
-        logger.info("Harvested 0 items")
+    start = formatTime(start, DATE_TIMESTAMP) 
+    end = start + 60 * 60 * 24 # one day      
+    url = "%s&start=%s&end=%s&" %(threeTaps, start, end)
+    url = threeTaps    
+    ret = []
+    _fetch(url, ret)
+    logger.info("Harvested %s items" %(len(ret)))
      
 """
 {

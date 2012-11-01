@@ -17,6 +17,12 @@ div.ad-summary{
     border:1px solid #CCC;
     padding:20px;
 }
+div#image {
+    margin:5px 10px 
+}
+div.post-title {
+    clear:both
+}
 </style> 
 <div class="page howitworks"> 
 
@@ -37,10 +43,13 @@ div.ad-summary{
      <div class="ad-summary">
        
            
-          <div id="image">
+          <div id="image" style="float:left">
             {% if default_image %}    
                 <img src="{{ default_image.full }}" width="200">
             {% endif %}
+          </div>
+          <div id="description" style="float:left">
+            {{ body }} 
           </div>
           
           <div  class="post-title">{{ heading }}</div>

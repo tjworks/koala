@@ -14,11 +14,10 @@ class Post(Model):
         # the args to pymongo"s ensure_index function.
         indices = (
             Index("_id"),
+            Index("ptm"),
         )
 
-    def __init__(self, initial=None, **kwargs):       
-        super(AttrDict, self).__init__()
-        
+  
         
 class PostTestCase(unittest.TestCase):
     def setUp(self):
