@@ -1,16 +1,21 @@
 from koala import application
-from koala.provider import harvester
-import logging,re
+from koala.webutils import getReferer
+import logging
+import re
 logger = logging.getLogger(__name__)
-
-
-def getProvider(url):
+def getProvider(request=None, url=None):
+    if(not url): url = getReferer(request)
+    if(not url): return None
+    c = CraigslistProvider(url)
+    if(c.accept()): return c 
+    """
     m = BaseProvider.__module__
     for attr in dir(m):
         p = getattr(m, attr)
         if(p in BaseProvider.__subclasses__()) :
-            pinstance = p(referer)
-            if(pinstance.accept()): return pinstance 
+            pinstance = p(url)
+            if(pinstance.accept()): return pinstance
+    """
     return None
             
 
@@ -32,6 +37,7 @@ class CraigslistProvider(BaseProvider):
     def accept(self):
         return self.getId()
     def fetch(self, sourceId=None):
+        from koala.providers import harvester
         items = harvester.fetch(sourceId)
         return items
         

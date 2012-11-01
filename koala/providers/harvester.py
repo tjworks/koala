@@ -34,7 +34,7 @@ def _fetch(url, ret):
         if(not obj):
             logger.error("Failed to load!")
             continue
-        
+        skipped=0
         for entry in obj['results']:
             if(not 'sourceId' in entry):
                 logger.error("Invalid entry, missing sourceId: %s" %entry)
@@ -45,11 +45,14 @@ def _fetch(url, ret):
                 p.save()
                 ret.append(p)
             else:
+                skipped = skipped+1
                 logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
-        logger.debug("Sleeping a little")
-        time.sleep(5)
         pageno = pageno +1
-                        
+        if(skipped == len(obj['results'])):
+            logger.debug("This request was all skipped, we must have the data from this point on, abort")
+            break        
+        logger.debug("Sleeping a little")
+        time.sleep(10)
     return ret
 def _load(url):
     logger.debug("Fetching %s" %url)
@@ -78,7 +81,9 @@ def convert(entry):
         p.ptm = formatTime( entry['postingTimestamp'] )
         p.ctm = formatTime()
         p._id = _id
-    return p
+        return p
+    else: 
+        return None
 
 def crawl():
     """

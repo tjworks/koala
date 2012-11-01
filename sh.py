@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
-from koala.provider import harvester
+from koala.providers import harvester
 
 def fetch(**kwargs):
     reload(harvester)

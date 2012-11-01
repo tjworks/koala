@@ -12,7 +12,7 @@ from koala import settings
 import json
 import os
 import unittest
-from koala.provider.provider import *
+from koala.providers.provider import *
 
 class ProviderTest(TestCase):
 

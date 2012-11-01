@@ -58,14 +58,24 @@ div.forms {
     
 }
 
-#topnav td  {
+div.tab-menuitem {
     border:1px solid #888;
     padding:10px 30px;
     font-weight:bold;
-    height:50px;
+    height:25px;
 }
 #logo {
     width:80px
+}
+
+table {
+    border:0px
+}
+.state-highlight {
+    background-color: #CCC
+}
+.state-hover {
+    background-color: #EEE
 }
 </style>
 
@@ -75,9 +85,6 @@ div.forms {
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
 <script language="javascript" src="/ext/lib/modal.popup.js"></script>
 
-<!--  precon scripts -->
-<script type="text/javascript" src="/ext/js/precon.client.js"></script>
-<script type="text/javascript" src="/ext/js/precon.search.js"></script>
 
 {% block js_include %} {% endblock %}
 
@@ -89,7 +96,12 @@ div.forms {
 	{% block headernav %}
 	<div id="header">
 		<table id="topnav">
-		    <tr><td style="border:0px"><img id="logo" src="/static/images/bunny.png"></td><td>How It Works</td><td>Edit Ad</td><td>My Stuff</td></tr>
+		    <tr><td style="border:0px"><img id="logo" src="/static/images/bunny.png"></td>
+		    <td valign="middle"><div class="tab-menuitem">Home</div></td>
+		    <td valign="middle"><div class="tab-menuitem">How It Works</div></td>
+		    <td><div class="tab-menuitem">My Stuff</div></td>
+		    <td><div class="tab-menuitem">FAQ</div></td>
+		    </tr>
 		</table>
 	</div>
 	{% endblock %}     

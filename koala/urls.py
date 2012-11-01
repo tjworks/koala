@@ -18,7 +18,12 @@ urlpatterns = patterns('',
     url(r'^graph/(?P<precon_id>.*)$', 'graph.graphview.handler'),
     
     # search/proxy
-    url(r'^activate/(?P<invite_id>.*)$', 'koala.adview.activate'),
+    url(r'^(?P<post_id>.*?)/?activate/?$', 'koala.views.adview.activate'),
+    url(r'^(?P<post_id>.*?)/?view/?$', 'koala.views.adview.view'),
+    
+    #url(r'^activate/(?P<post_id>.*)$', 'koala.views.adview.activate'),    
+    #url(r'^view/(?P<post_id>.*)$', 'koala.views.adview.view'),    
+    
 
     #url('^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': 'static'}),
     

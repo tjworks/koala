@@ -2,10 +2,11 @@ from django.http import HttpResponse
 from django.template import loader
 from django.template.context import RequestContext
 from django.views.decorators.http import require_http_methods
-from koala import settings
-from koala import application
-from koala.provider import provider
-import json,logging
+from koala import application, settings
+from koala.providers import provider
+from koala.webutils import checkReferer
+import json
+import logging
 
 logger = logging.getLogger(__name__)
 
@@ -35,18 +36,3 @@ def renderDebugInfo():
     info +="</pre></div>"
     return info
     
-def checkReferer(req):
-    """
-    See if user is directed from the ad post by checking the HTTP Referer header
-    """
-    if(not 'HTTP_REFERER' in req.META):
-        logger.debug("No referer") 
-        return None
-    
-    referer = req.META['HTTP_REFERER']
-    logger.debug("Referer is %s" %referer) 
-
-    handler = provider.getProvider(referer)
-    
-    logger.debug("Referer handler is %s" %handler)
-    return None

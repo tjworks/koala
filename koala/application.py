@@ -30,9 +30,7 @@ def getCurrentUser(raiseOnError=True):
 	
 	logger.debug("Cache miss, loading user")
 	uid = getCurrentUserId(raiseOnError)
-	if uid:	
-		from gameface.service import UserManager
-		appContext.userObj = UserManager.findByUserId(uid)
+	 
 	if hasattr(appContext, 'userObj'): return appContext.userObj	
 	if raiseOnError: raise Exception("Failed to get default user, are you logged in?")	
 	return None	
@@ -47,7 +45,7 @@ def getContext(req=None):
         #logger.debug("Cache Hit, get user")
         return appContext.ctx
     
-    logger.debug("Creating new context")
+    #logger.debug("Creating new context")
     if(not req): raise Exception("Request object must be provided when first time call getContext()")
     appContext.ctx = RequestContext(req, {})
     appContext.ctx.debug = []

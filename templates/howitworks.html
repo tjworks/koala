@@ -13,16 +13,7 @@ div.answer {
 div.question {
     margin:10px
 }
-div.ad-summary{
-    border:1px solid #CCC;
-    padding:20px;
-}
-div#image {
-    margin:5px 10px 
-}
-div.post-title {
-    clear:both
-}
+ 
 </style> 
 <div class="page howitworks"> 
 
@@ -40,22 +31,8 @@ div.post-title {
         3. You can manage your offer, confirm appointment etc in one place! All this is completely free, always!  
     </div>
  
-     <div class="ad-summary">
-       
-           
-          <div id="image" style="float:left">
-            {% if default_image %}    
-                <img src="{{ default_image.full }}" width="200">
-            {% endif %}
-          </div>
-          <div id="description" style="float:left">
-            {{ body }} 
-          </div>
-          
-          <div  class="post-title">{{ heading }}</div>
-          
-    
-    </div>
+    {% include "adsummary.html" %}
+    <!-- 
     <h3>Questions and Answers</h3>
     <div class="faq">
         <div class="question">Why do I want to use Little Bunny as a casual seller?</div>
@@ -67,7 +44,7 @@ div.post-title {
                 <li>Tired of the no-show buyer? We help you to avoid it by requesting a nominal deposit from buyer(we charge a nominal $1 to cover the credit card transaction fee)</li>                                
         </div>
     </div>
-    
+     -->
 </div> <!--  end page -->
 
 {% endblock %}
