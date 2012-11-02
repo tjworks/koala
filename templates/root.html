@@ -77,6 +77,25 @@ table {
 .state-hover {
     background-color: #EEE
 }
+
+.instructions {
+  font-size:0.8em;
+  padding:10px;
+  
+}
+
+
+/** form fields */
+input[type=text] {
+  padding:2px 5px;
+  font-size:1.1em;
+  height:30px;
+}
+button {
+  height:35px;
+  font-size:1.2em;
+}
+
 </style>
 
 {% block css_include %} {% endblock %}
@@ -101,6 +120,7 @@ table {
 		    <td valign="middle"><div class="tab-menuitem">How It Works</div></td>
 		    <td><div class="tab-menuitem">My Stuff</div></td>
 		    <td><div class="tab-menuitem">FAQ</div></td>
+		    <td><div class="tab-menuitem">Login</div></td>
 		    </tr>
 		</table>
 	</div>
@@ -112,7 +132,7 @@ table {
 	{% endblock %}
 	
 	{% block footer %}
-	<div id="footer"></div>
-	{% endblock %}
+	<div id="footer" style="height:50px"> </div>
+	{% endblock %} 
 </div>
 </body></html>

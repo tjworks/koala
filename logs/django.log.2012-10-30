@@ -1,0 +1,45 @@
+DEBUG 2012-10-30 16:57:07,897 application 31458 4506943488 Creating new context
+DEBUG 2012-10-30 16:57:07,968 views 31458 4506943488 No referer
+ERROR 2012-10-30 16:57:07,970 base 31458 4506943488 Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/views/decorators/http.py", line 41, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/TJ/work/koala/koala/views.py", line 18, in home
+    template = loader.get_template('home.html')
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/template/loader.py", line 138, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: home.html
+DEBUG 2012-10-30 16:57:08,156 application 31458 4506943488 Creating new context
+DEBUG 2012-10-30 16:57:14,929 application 31458 4506943488 Creating new context
+DEBUG 2012-10-30 16:57:15,075 application 31458 4506943488 Creating new context
+DEBUG 2012-10-30 16:57:18,943 application 31458 4506943488 Creating new context
+ERROR 2012-10-30 16:57:18,943 base 31458 4506943488 Internal Server Error: /activate/
+Traceback (most recent call last):
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/views/decorators/http.py", line 41, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/TJ/work/koala/koala/adview.py", line 19, in activate
+    raise Exception("Missing invitation ID")
+Exception: Missing invitation ID
+DEBUG 2012-10-30 16:57:19,045 application 31458 4506943488 Creating new context
+DEBUG 2012-10-30 16:57:25,585 application 31458 4506943488 Creating new context
+DEBUG 2012-10-30 16:57:25,589 harvester 31458 4506943488 Fetching http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=10&sourceId=3367478677
+INFO 2012-10-30 16:57:25,596 connectionpool 31458 4506943488 Starting new HTTP connection (1): 3taps.net
+DEBUG 2012-10-30 16:57:28,436 connectionpool 31458 4506943488 "GET /search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=10&sourceId=3367478677 HTTP/1.1" 200 None
+DEBUG 2012-10-30 16:57:28,463 harvester 31458 4506943488 Got 0 entries
+DEBUG 2012-10-30 16:57:28,463 adview 31458 4506943488 fetched from source
+ERROR 2012-10-30 16:57:28,463 base 31458 4506943488 Internal Server Error: /activate/3367478677
+Traceback (most recent call last):
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/TJ/work/koala/ENV/lib/python2.7/site-packages/django/views/decorators/http.py", line 41, in inner
+    return func(request, *args, **kwargs)
+  File "/Users/TJ/work/koala/koala/adview.py", line 30, in activate
+    if(not post.fetched):
+AttributeError: 'list' object has no attribute 'fetched'
+DEBUG 2012-10-30 16:57:28,582 application 31458 4506943488 Creating new context

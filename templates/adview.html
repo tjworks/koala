@@ -16,7 +16,10 @@ images[images.length]="{{ image.full }}"
 $(function(){
 	$("#buyer-options li").click(function(){
 		$("#buyer-options li").removeClass("state-highlight");
+		$("#buyer-options input").attr("checked", false)
+		
 		$(this).addClass("state-highlight")
+		$(this).find("input").attr('checked', true)
 	})
 	$("#buyer-options li").mouseover(function(){
         $(this).addClass("state-hover")
@@ -34,13 +37,16 @@ Calendar.init = function(id){
 	var calendar = $("#"+id);
 	var tbody = calendar.find("tbody.events")	
 	// 7 am - 10pm
-    for(var i=7; i<23; i++){        
+    for(var i=9; i<21; i++){        
     	// 7 days
     	var tr = $("<tr></tr>")
         tr.append("<td>"+i+":00</td>")
            
         for(var d=0; d<7; d++){
-        	tr.append("<td class='slot' data-day='" + d +"' data-hour='" + i+ "'></td>")
+          if(i<=12 && d<5)
+            tr.append("<td class='slot calendar-seller' data-day='" + d +"' data-hour='" + i+ "'></td>")
+        	else
+        	   tr.append("<td class='slot' data-day='" + d +"' data-hour='" + i+ "'></td>")
         }
     	tbody.append(tr)
     }   
@@ -53,13 +59,16 @@ Calendar.init = function(id){
         $(this).removeClass("state-hover")
     })
     calendar.find("td.slot").click(function(){
-        if( $(this).hasClass("calendar-proposed") ){
-        	$(this).removeClass("calendar-proposed") 
+        if( $(this).hasClass("calendar-buyer") ){
+        	$(this).removeClass("calendar-buyer") 
         	$(this).text("")
         }
         else {
-        	$(this).addClass("calendar-proposed")
+          $("td.calendar-seller.calendar-buyer").removeClass("calendar-buyer").text("")
+          
+        	$(this).addClass("calendar-buyer")
         	$(this).text( $(this).attr("data-hour") + ":00")
+
         }
     })
     calendar.find("td.slot").mouseout(function(){        
@@ -82,27 +91,83 @@ Calendar.init = function(id){
     font-size:0.8em;
     padding:2px;
 }
-.calendar-proposed {
-    background-color:#80F7E7
+td.slot{
+  cursor:pointer
 }
+#legend td {
+  border:0px;
+  height:15px;
+  font-size:0.8em;
+}
+table#legend {
+  border:0px
+}
+.calendar-buyer {
+    background-color:lightgreen
+}
+.calendar-seller {
+    background-color:lightblue
+}
+.calendar-buyer.calendar-seller {
+    background-color:orange
+} 
 .calendar-confirmed {
     background-color:#5FDB2E
 }
+.inline {
+  padding:1px 5px;
+  border:1px solid #CCC;
+  width:100px;
+  display:block;
+  float:left;
+  margin:2px 5px;
+}
+li {
+  list-style-type:none;
+  padding:2px 5px;
+  float:clear
+}
+#buyer-options li {
+  cursor:pointer;
+}
+
 
 </style>
 <div class="page adview"> 
  
     {% include "adsummary.html" %}
   
-    <h3>Step 1:  Say how badly you want this item?</h3>  
+    <h3>Step 1:  How badly you want this item?</h3>  
+    <div class="instructions">
+      Seller likes to deal with motivated buyer!
+    </div>
     <ul id="buyer-options">
-        <li id="opt-hold">Really really bad! I'll put down 10$ fully refundable deposit to HOLD IT FOR ME! 
-        <li id="opt-offer">I want it! But I'd like to offer <input size=20 placeholder="Name your price"> {{currency}}</li>  
-        <li id="opt-view">I'm interested, I'd like to decide after I viewed the item.  </li>
+        <li id="opt-hold"><input type=radio name=buyerOpt value=1 > Really bad! Hold it for me please!
+          <div id="deposit">
+            
+          </div>
+          
+        </li> 
+        <li id="opt-offer"><input type=radio name=buyerOpt value=2> I want it! I'd like to offer <input size=12 type="text" placeholder="Name your price"> {{currency}}</li>  
+        <li id="opt-view"><input type=radio name=buyerOpt value=3 checked> Interested! I'll decide after I viewed the item.  </li>
     </ul>
     
     <h3>Step 2: Now find a time works for you</h3>
     <div  id="calendar">
+      <div class="instructions">
+         <div class="calendar-seller inline">Blue time slot</div> if they present, they indicate seller's preferred meet time
+         <div class="clear"></div>
+         <div class="calendar-buyer inline">Green time slot</div> Your proposed time slots
+         <div class="clear"></div>
+         <div class="calendar-buyer calendar-seller inline">Orange time slot</div> Selected appointment
+         <div class="clear"></div>
+      </div>
+      <!--
+      <table id="legend" width="30%">
+        <tr><td class="calendar-seller"></td><td>Seller Availability</td><td class="calendar-buyer"></td><td>Your Availability</td>
+          </tr>
+      </table>
+      -->
 	    <table>
 	       <tbody>
 	       <tr>
@@ -115,9 +180,16 @@ Calendar.init = function(id){
 	    </table>
     </div>
     
-    <h3>Step 3: Send</h3>
-  
-   
+    <h3>Step 3: Your Contact</h3>
+    <table>
+      <tr>
+        <td>Your email is all we need:</td><td><input type="text" name="email"> <button>Send</button></td>
+      </tr>
+      <tr>
+        <td>Mobile phone only if you like SMS</td> <td><input type="text"></td> 
+      </tr>
+      
+    </table>
   </div> <!--  end page -->
 
 {% endblock %}
