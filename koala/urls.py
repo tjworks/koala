@@ -40,7 +40,7 @@ urlpatterns = patterns('',
 
 
     # Home page
-    url(r'^$', 'koala.views.home'),
+    url(r'^$', 'koala.views.main.home'),
 
     url(r'^howto$', 'koala.views.home'),
 
