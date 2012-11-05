@@ -1,3 +1,76 @@
+* {
+    font-family:"tempus sans itc";    
+}
+div.outmost {
+    width:960px;
+    margin: 0px auto;
+}
+div.page {
+    width:960px;
+    
+    margin:0px auto;
+}
+h1 {
+    font-size:1.5em;
+}
+h2{
+    font-size:1.3em;
+}
+div#description {
+    width:70%
+}
+div.clear {
+    clear:both
+}
+div.field-title {
+    width:150px;
+    //font-weight:bold;
+    display:inline;
+    float:left
+}
+div.field {
+    float:left
+}
+div.forms {
+    margin-top:20px;
+    
+}
+
+div.tab-menuitem {
+    border:1px solid #888;
+    padding:10px 30px;
+    font-weight:bold;
+    height:25px;
+}
+#logo {
+    width:80px
+}
+
+table {
+    border:0px
+}
+.state-highlight {
+    background-color: #CCC
+}
+.state-hover {
+    background-color: #EEE
+}
+
+
+
+
+/** form fields */
+input[type=password], select, input[type=text] {
+  padding:2px 4px;
+  font-size:1.1em;
+  height:25px;
+}
+button {
+  height:35px;
+  width:100px;
+  font-size:1.2em;
+}
+
 .page1{
     margin:10px auto;
     padding:10px;
@@ -147,4 +220,23 @@ li {
 
 .post-title {
 	padding:10px
+}
+
+.instructions {
+  font-size:0.9em;
+  padding:0px 10px;
+  
+}
+
+
+
+img.shadow {
+	
+    -moz-box-shadow: 3px 3px 4px #000;
+    -webkit-box-shadow: 3px 3px 4px #000;
+    box-shadow: 3px 3px 4px #000;
+    /* For IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+    /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }

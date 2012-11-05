@@ -1,0 +1,44 @@
+{% extends "root.html" %} 
+
+
+{% block main %}
+<style>
+.form-field-vertical p {
+    margin:8px 0px;
+}
+table#offers td {
+    padding:0px 10px;
+    vertical-align:middle
+}
+</style>  
+<div class="page dashboard"> 
+    <section>
+        <h2>Seller's Dashboard</h2>
+        
+        <table>
+            <tr>
+                <td valign=top>
+                    <img class="shadow" src="http://images.craigslist.org/3Eb3L83J15L15G15Z3cb1c870214826461e4a.jpg" width="150">
+                    <br/>
+                    Expires in 24 days <a href="#">Renew</a>
+                    <br/>
+                    Page Views: 203
+                </td>
+                <td valign=top width=20>&nbsp;</td>             
+                <td valign=top>                    
+                    <table id="offers">
+                        <tr><th>Who</th><th>What</th><th>How Much</th><th>When</th><th></th> </tr>
+                        <tr><td>johnedoe@gmail.com</td><td>Request for viewing</td><td>Not specified</td><td>10pm Wednesday </td><td><img src="/static/images/ok-16.png"></td></tr>
+                        <tr><td>smith@yahoo.com</td><td>Full price offer</td><td>1990</td><td>9am Wednesday </td><td><img src="/static/images/ok-16.png"></td></tr>
+                    </table>
+                
+                </td>
+                
+            </tr>
+        </table>
+        
+    </section>
+    
+</div> <!--  end page -->
+
+{% endblock %}

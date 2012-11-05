@@ -27,13 +27,13 @@ $(function(){
 	        Activating Item
 	    </h2>
 	    <blockquote>
-	        Thank you for trying {{ app.name }}!  Here you can easily activate your for sale item following steps
+	        Thank you for trying {{ app.name }}!  Here you can easily activate your for sale item following steps. Already a member? Please <a href="/pages/signin.html">Sign In</a>
 	    </blockquote>
 	  
 	    <div class="box">
 		   <div class="image" style="float:left">
 		     {% if default_image %}    
-		         <img src="{{ default_image.full }}" width="150">
+		         <img class="shadow" src="{{ default_image.full }}" width="150">
 		     {% endif %}
 		   </div>
 		   <div  class="post-title floating">{{ heading }}</div>
@@ -99,7 +99,16 @@ $(function(){
   </blockquote>
   </section>
   
+  
+  
+  <section>
+    <button onclick="javascript:document.location.href='/pages/signup.html'">SUBMIT</button>  
+  </section>
+  
   <div class="clear"></div>
+  
+  
+  
   </div> <!--  end page -->
 
 {% endblock %}

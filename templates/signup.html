@@ -1,0 +1,60 @@
+{% extends "root.html" %} 
+
+
+{% block main %}
+<style>
+.form-field-vertical p {
+    margin:8px 0px;
+}
+
+</style>  
+<div class="page howitworks"> 
+    <section>
+        <h2>Almost there...</h2>
+        
+        <blockquote>
+            <div class="form-field-vertical">
+                <p>We need your email to let you know if buyer places offer, we only ask this because you're new here. Your email is safe with us.  </p>                
+                <input type=text placeholder="Email"> <b>Required</b>
+            </div>
+            
+            <div class="form-field-vertical">            
+                <p>If you're so inclined, you may opt to receive SMS notification when there's buyer activity. </p>
+                <input type=text placeholder="10 digits phone number"> Strictly Optional
+            </div>
+            
+            <div class="form-field-vertical">
+                <p><button onclick="javascript:gotourl('/pages/sdash.html')">SAVE</button></p>
+            </div>
+        </blockquote>
+        
+    </section>
+    
+    <section>
+	  <h3>Finally, Update Your Ad Posting</h3>
+	  <blockquote>
+	       Please copy and paste following code in your ad and re-post it to your classified site:
+	        <pre>
+	       &lt;a href="http://localhost:8000/3380084942/view">Buy Me&lt;/a> |   
+	       &lt;a href="http://localhost:8000/3380084942/view">Rent Me&lt;/a> |
+	       &lt;a href="http://localhost:8000/3380084942/view">More Info&lt;/a>
+	       </pre>
+	  
+	      Or if you prefer, you can let us to handle the updating for you
+	      <blockquote>
+	            <div id="site-creds">
+	                <select>
+	                    <option>Craigslist.org</option>
+	                    <option>Oodle</option>
+	                </select>
+	                <input type="text" size=15 placeholder="Username">
+	                <input type="password" size=15 placeholder="Password">        
+	                <button>UPDATE</button>
+	            </div>  
+	      </blockquote>  
+	        
+	  </blockquote>  
+	  </section>
+</div> <!--  end page -->
+
+{% endblock %}
