@@ -21,6 +21,18 @@ def home(req):
     
     return HttpResponse(template.render(ctx))
 
+def serve(req, pagename=None):
+    """
+    Serve static pages    
+    """
+    pagename = pagename or 'home.html'
+    template = loader.get_template(pagename)
+    #ctx = gf_template.get_context(req, {})
+    ctx = application.getContext()
+    
+    
+    return HttpResponse(template.render(ctx))
+    
 
 def renderDebugInfo():
     import socket

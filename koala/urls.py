@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # graph app
     url(r'^graph/(?P<precon_id>.*)$', 'graph.graphview.handler'),
     
+    url(r'^pages/(?P<pagename>.*)$', 'koala.views.main.serve'),
     # search/proxy
     url(r'^(?P<post_id>.*?)/?activate/?$', 'koala.views.adview.activate'),
     url(r'^(?P<post_id>.*?)/?view/?$', 'koala.views.adview.view'),
@@ -38,17 +39,10 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-
     # Home page
     url(r'^$', 'koala.views.main.home'),
 
     url(r'^howto$', 'koala.views.home'),
-
-
-    
-
-
-
     # Userena app
     #url(r'^accounts/', include('userena.urls')),
 )

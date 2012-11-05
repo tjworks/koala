@@ -17,21 +17,21 @@ div.question {
 </style> 
 <div class="page howitworks"> 
 
-    Little Bunny is a freemium tool aimed at assisting casual seller and buyer to communicate and transact the for sale items such as those found on Craigslist or local classified  
+    {{ app.name }} is a freemium tool aimed at assisting casual seller and buyer to communicate and transact the for sale items on any classified sites  
 
     <h3>How does it work?</h3>
     <div class="step">
-        1. You post your ad at your favorite listing site, including a link(provided by Little Bunny)
+        1. You post your ad at your favorite listing site, including a link(provided by  {{ app.name }})
     </div>
     <div class="step">
-        2. Potential buyer clicks the link, views the ad on Little Bunny's friendly site
+        2. Potential buyer clicks the link, views the ad on {{ app.name }}'s friendly site
     </div>
     
      <div class="step">
         3. You can manage your offer, confirm appointment etc in one place! All this is completely free, always!  
     </div>
  
-    {% include "adsummary.html" %}
+   
     <!-- 
     <h3>Questions and Answers</h3>
     <div class="faq">

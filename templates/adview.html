@@ -31,105 +31,11 @@ $(function(){
     
 })
 
-function Calendar(){}
-Calendar.init = function(id){
-	//$("#id tbody")
-	var calendar = $("#"+id);
-	var tbody = calendar.find("tbody.events")	
-	// 7 am - 10pm
-    for(var i=9; i<21; i++){        
-    	// 7 days
-    	var tr = $("<tr></tr>")
-        tr.append("<td>"+i+":00</td>")
-           
-        for(var d=0; d<7; d++){
-          if(i<=12 && d<5)
-            tr.append("<td class='slot calendar-seller' data-day='" + d +"' data-hour='" + i+ "'></td>")
-        	else
-        	   tr.append("<td class='slot' data-day='" + d +"' data-hour='" + i+ "'></td>")
-        }
-    	tbody.append(tr)
-    }   
-	
-	
-	calendar.find("td.slot").mouseover(function(){
-        $(this).addClass("state-hover")
-    })
-    calendar.find("td.slot").mouseout(function(){        
-        $(this).removeClass("state-hover")
-    })
-    calendar.find("td.slot").click(function(){
-        if( $(this).hasClass("calendar-buyer") ){
-        	$(this).removeClass("calendar-buyer") 
-        	$(this).text("")
-        }
-        else {
-          $("td.calendar-seller.calendar-buyer").removeClass("calendar-buyer").text("")
-          
-        	$(this).addClass("calendar-buyer")
-        	$(this).text( $(this).attr("data-hour") + ":00")
-
-        }
-    })
-    calendar.find("td.slot").mouseout(function(){        
-        
-    })
-}
-
 
 
 </script>
 <style>
-#calendar table {
-    border:1px solid #CCC;
-    width:600px;
-}
-#calendar td  {
-    border:1px solid #CCC;
-    height:10px;
-    width:12%;
-    font-size:0.8em;
-    padding:2px;
-}
-td.slot{
-  cursor:pointer
-}
-#legend td {
-  border:0px;
-  height:15px;
-  font-size:0.8em;
-}
-table#legend {
-  border:0px
-}
-.calendar-buyer {
-    background-color:lightgreen
-}
-.calendar-seller {
-    background-color:lightblue
-}
-.calendar-buyer.calendar-seller {
-    background-color:orange
-} 
-.calendar-confirmed {
-    background-color:#5FDB2E
-}
-.inline {
-  padding:1px 5px;
-  border:1px solid #CCC;
-  width:100px;
-  display:block;
-  float:left;
-  margin:2px 5px;
-}
-li {
-  list-style-type:none;
-  padding:2px 5px;
-  float:clear
-}
-#buyer-options li {
-  cursor:pointer;
-}
+
 
 
 </style>

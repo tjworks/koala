@@ -36,20 +36,23 @@ def getCurrentUser(raiseOnError=True):
 	return None	
 
 def getContext(req=None):
-    """
-    Get the current requestcontext object used for template rendering
-    Create a new one if not exists
-    """
-    global appContext
-    if hasattr(appContext, 'ctx'): 
-        #logger.debug("Cache Hit, get user")
-        return appContext.ctx
-    
-    #logger.debug("Creating new context")
-    if(not req): raise Exception("Request object must be provided when first time call getContext()")
-    appContext.ctx = RequestContext(req, {})
-    appContext.ctx.debug = []
-    return appContext.ctx
+	"""
+	Get the current requestcontext object used for template rendering
+	Create a new one if not exists
+	"""
+	global appContext
+	if hasattr(appContext, 'ctx'): 
+		#logger.debug("Cache Hit, get user")
+		return appContext.ctx
+
+	#logger.debug("Creating new context")
+	if(not req): raise Exception("Request object must be provided when first time call getContext()")
+	appContext.ctx = RequestContext(req, {})
+	appContext.ctx.debug = []
+	appContext.ctx.app = {
+		'name':'Koala'
+	}
+	return appContext.ctx
 
 def setUser(userObj):
 	appContext.userObj = userObj

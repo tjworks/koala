@@ -2,7 +2,8 @@
 <!-- saved from url=(0034)/instant-qa/ -->
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Koala</title>
-<link rel="stylesheet" type="text/css" href="/tmpl/style.css"> 
+<link rel="stylesheet" type="text/css" href="/static/css/main.css"> 
+
 <!--[if IE]>
 <style type="text/css">
 ul.addtoany_list a img{filter:alpha(opacity=70)}
@@ -102,7 +103,7 @@ button {
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-<script language="javascript" src="/ext/lib/modal.popup.js"></script>
+<script language="javascript" src="/static/js/calendar.js"></script>
 
 
 {% block js_include %} {% endblock %}
@@ -115,12 +116,14 @@ button {
 	{% block headernav %}
 	<div id="header">
 		<table id="topnav">
-		    <tr><td style="border:0px"><img id="logo" src="/static/images/bunny.png"></td>
-		    <td valign="middle"><div class="tab-menuitem">Home</div></td>
-		    <td valign="middle"><div class="tab-menuitem">How It Works</div></td>
-		    <td><div class="tab-menuitem">My Stuff</div></td>
-		    <td><div class="tab-menuitem">FAQ</div></td>
-		    <td><div class="tab-menuitem">Login</div></td>
+		    <tr><td style="border:0px"><img id="logo" src="/static/images/koala.png"></td>
+		    <td valign="middle"><div class="tab-menuitem"><a href="/pages/home.html">Home</a></div></td>
+		    <td valign="middle"><div class="tab-menuitem"><a href="/pages/howitworks.html">How It Works</a></div></td>
+		    <!-- <td valign="middle"><div class="tab-menuitem"><a href="pages/faq.html">FAQ</a></div></td>  -->
+		    
+		    
+		    <td valign="middle"><div class="tab-menuitem"><a href="/pages/signin.html">Sign In</a></div></td> 		    		    
+		    
 		    </tr>
 		</table>
 	</div>

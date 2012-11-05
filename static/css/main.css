@@ -1,0 +1,150 @@
+.page1{
+    margin:10px auto;
+    padding:10px;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-origin: padding-box;
+   
+    border: solid 1px #555;
+    color: #444;
+    display: block;
+    font-size: 13px;
+    line-height: normal;
+    outline-color: #444;
+    outline-style: none;
+    position: relative;
+    vertical-align: baseline;
+    width: 80%;
+    background-color: #F4F4F4;
+    background-color: #F4F4F4;
+    
+}
+
+.box {
+   padding:10px;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   
+    width:760px;    
+    //height:620px;
+    margin:auto;
+    display:block;
+        
+    
+    //background-image:url('images/grass-bg.png');
+    background: #83A6D4;
+    background: #C0C02A;
+    background: #B0E0E9;
+    background: #92B3DE;
+    background-position:100% 100%;
+    background-repeat:no-repeat;
+    position:relative;
+    
+        -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 3px 3px 5px #999;
+       box-shadow: 5px 5px 5px  #999;
+}
+
+.page{
+    margin:10px auto;
+    padding:15px;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-origin: padding-box;
+    
+  
+    border: solid 1px #555;
+    color: #444;
+    display: block;
+    font-size: 13px;
+    line-height: normal;
+    outline-color: #444;
+    outline-style: none;
+    position: relative;
+    vertical-align: baseline;
+    width: 80%;
+    background-color: #F4F4F4;
+    background-color: #F4F4F4;
+ 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;    
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 3px 3px 5px #999;
+    box-shadow: 5px 5px 5px  #999;
+}
+
+.floating {
+	float:left	
+}
+
+.form-fieldset {
+	padding:8px 0px;
+	
+}
+
+
+/**calendar */
+#calendar table {
+    border:1px solid #CCC;
+    width:600px;
+}
+#calendar td  {
+    border:1px solid #CCC;
+    height:10px;
+    width:12%;
+    font-size:0.8em;
+    padding:2px;
+}
+td.slot{
+  cursor:pointer
+}
+#legend td {
+  border:0px;
+  height:15px;
+  font-size:0.8em;
+}
+table#legend {
+  border:0px
+}
+.calendar-buyer {
+    background-color:lightgreen
+}
+.calendar-seller {
+    background-color:lightblue
+}
+.calendar-buyer.calendar-seller {
+    background-color:orange
+} 
+.calendar-confirmed {
+    background-color:#5FDB2E
+}
+.inline {
+  padding:1px 5px;
+  border:1px solid #CCC;
+  width:100px;
+  display:block;
+  float:left;
+  margin:2px 5px;
+}
+li {
+  list-style-type:none;
+  padding:2px 5px;
+  float:clear
+}
+#buyer-options li {
+  cursor:pointer;
+}
+
+
+.post-title {
+	padding:10px
+}
