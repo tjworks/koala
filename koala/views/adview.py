@@ -72,6 +72,9 @@ def view(req, post_id=None):
     return application.renderResponse()
 
 @require_http_methods(["GET", "POST", "HEAD"])
+def edit(req, post_id=None):
+    return activate(req, post_id)
+@require_http_methods(["GET", "POST", "HEAD"])
 def activate(req, post_id=None):
     """
     This handles the case when seller accepts invitation and clicks the link

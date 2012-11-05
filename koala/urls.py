@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     
     url(r'^pages/(?P<pagename>.*)$', 'koala.views.main.serve'),
     # search/proxy
+    url(r'^(?P<post_id>.*)/edit/?$', 'koala.views.adview.edit'),
     url(r'^(?P<post_id>.*?)/?activate/?$', 'koala.views.adview.activate'),
     url(r'^(?P<post_id>.*?)/?view/?$', 'koala.views.adview.view'),
     
