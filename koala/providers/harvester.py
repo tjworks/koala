@@ -10,9 +10,9 @@ import uuid
 import pymongo
 
 logger = logging.getLogger(__name__)
-PAGE_SIZE = 500
+PAGE_SIZE = 2000
 #threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=100&metroCode=USA-ATL&heading=MINI Cooper&annotations={source_subcat:cto}'
-threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&categoryClass=SSSS&rpp=1&retvals=annotations,body,category,categoryClass,categoryName,currency,expirationTimestamp,flags,hasImage,heading,id,images,immortal,indexed,language,location,price,postingTimestamp,source,sourceId,sourceUrl'
+threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&categoryClass=SSSS&retvals=annotations,body,category,categoryClass,categoryName,currency,expirationTimestamp,flags,hasImage,heading,id,images,immortal,indexed,language,location,price,postingTimestamp,source,sourceId,sourceUrl'
 def fetch(sourceId=None):
     url = threeTaps
     if(sourceId): url = "%s&sourceId=%s" %(url, sourceId)
@@ -23,44 +23,50 @@ def fetch(sourceId=None):
 
 def _fetch(url, ret):
     # first get the count
-    obj = _load(url)
+    theurl = "%s&rpp=%s" %(url, PAGE_SIZE)
+    #obj = _load(url)
     source = "clst"
-    logger.debug( "Total results %s" %(  obj['numResults']) )
     
     # default rpp size 100
-    total = obj['numResults']
     pageno = 0
+    obj =None 
     import math
-    while (  pageno < math.ceil(  float(total)/PAGE_SIZE ) ):  # page no less than total page no, 0 based
-        #page 0 already loaded, start from 1
-        logger.debug( "Loading page %s" %(pageno))
+    while (  True ):  # page no less than total page no, 0 based
+        #page 0 already loaded, start from 
+
+	logger.debug("Sleeping a little")
+        time.sleep(2)
         theurl = "%s&rpp=%s&page=%s" %(url, PAGE_SIZE, pageno)
         obj = _load(theurl)
         if(not obj):
-            logger.error("Failed to load!")
-            continue
+            logger.error("Failed to load page " %pageno)
+	    break
         skipped=0
+        added=0
+    	total = obj['numResults']
         for entry in obj['results']:
             if(not 'sourceId' in entry):
                 logger.error("Invalid entry, missing sourceId: %s" %entry)
                 continue
             p = convert(entry)
             if(p):
-                logger.debug("Adding post: %s" %entry['sourceUrl'])
+                #logger.debug("Adding post: %s" %entry['sourceUrl'])
                 p.save()
                 ret.append(p)
+                added = added + 1
             else:
                 skipped = skipped+1
-                logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
+                #logger.debug("Skipping post, already exists: %s" %entry['sourceUrl'])
+        logger.debug( "Total is %s Page %s, results %s added: %s skipped: %s" %(total,pageno, len(obj['results']),added,skipped ))
         pageno = pageno +1
         if(skipped == len(obj['results'])):
             logger.debug("This request was all skipped, we must have the data from this point on, abort")
             break        
-        logger.debug("Sleeping a little")
-        time.sleep(5)
+        if(pageno ==  math.ceil(  float(total)/PAGE_SIZE )): break
+
     return ret
 def _load(url):
-    logger.debug("Fetching %s" %url)
+    #logger.debug("Fetching %s" %url)
     r = requests.get(url)
     if (r.status_code != 200):
         logger.error("Failed to load request %s: status %s" %(url, r.status_code))
@@ -68,7 +74,11 @@ def _load(url):
     
     from django.utils.encoding import smart_str    
     content = smart_str(r.text)
-    obj = json.loads(content)
+    obj= None
+    try:
+    	obj = json.loads(content)
+    except:
+	logger.error("Failed to load %s" %url)
     return obj
 def convert(entry):
     """
@@ -104,17 +114,23 @@ def crawl():
         print "Starting time: %s" %start
     else:
         logger.debug("No record, starting from 10/1")  
-    logger.info("Requesting posts from %s  " %start)
-    
-    end = dateutil.formatTime(start, dateutil.DATE_TIMESTAMP)
-    end = end +   60 # one minute
-    end = dateutil.formatTime(float(end), dateutil.DATE_SECONDS)
-          
-    url = "%s&start=%s&end=%s&" %(threeTaps, start, end)
-    #url = threeTaps    
-    ret = []
-    _fetch(url, ret)
-    logger.info("Harvested %s items" %(len(ret)))
+  
+    stmp= dateutil.formatTime(start, dateutil.DATE_TIMESTAMP)
+    stmp=stmp+5
+    while(True):
+	 
+	    start = dateutil.formatTime(float(stmp), dateutil.DATE_SECONDS) # one minute
+	    end = stmp+60 # one minute
+	    end = dateutil.formatTime(float(end), dateutil.DATE_SECONDS)
+		  
+	    logger.info("Requesting posts from %s to %s " %(start,end))
+	    url = "%s&start=%s&end=%s&" %(threeTaps, start, end)
+	    #url = threeTaps    
+	    ret = []
+	    _fetch(url, ret)
+	    logger.info("Harvested %s items" %(len(ret)))
+            stmp = stmp+60
+
      
 """
 annotations,body,category,categoryClass,categoryName,currency,expirationTimestamp,flags,hasImage,heading,id,images,immortal,indexed,language,location,price,postingTimestamp,source,sourceId,sourceUrl

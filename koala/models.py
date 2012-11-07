@@ -8,6 +8,8 @@ class Post(Model):
         # A connection to your DB is automatically created.
         database = settings.MONGODB_NAME
         collection = "posts"
+	port = settings.MONGODB_PORT
+        host = settings.MONGODB_HOST
 
         # Now, we programatically declare what indices we want.
         # The arguments to the Index constructor are identical to

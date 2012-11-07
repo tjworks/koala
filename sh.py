@@ -28,7 +28,8 @@ def crawl(**kwargs):
     reload(harvester)
     while(True):
         harvester.crawl()
-        time.sleep(5)
+        time.sleep(2)
+	break
                 
     
 #we can change this one!

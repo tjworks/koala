@@ -216,6 +216,7 @@ USERENA_ACTIVATION_REQUIRED=False
 #mongoengine.connect(MONGODB_NAME, alias='default', host=MONGODB_HOST  )
 MONGODB_HOST='localhost'
 MONGODB_NAME='koala'
+MONGODB_PORT=27000
 NODE_URL='http://one-chart.com:3000'
 
 
