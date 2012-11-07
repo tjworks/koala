@@ -1,13 +1,18 @@
 from koala import application
-import logging,re,requests, json,uuid
 from koala.models import Post
+from myutil import dateutil
 from myutil.dateutil import *
+import logging
+import re
+import requests
+import json
+import uuid
 import pymongo
 
 logger = logging.getLogger(__name__)
 PAGE_SIZE = 100
 #threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=100&metroCode=USA-ATL&heading=MINI Cooper&annotations={source_subcat:cto}'
-threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&metroCode=USA-ATL&categoryClass=SSSS&rpp=1&'
+threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&categoryClass=SSSS&rpp=1&retvals=annotations,body,category,categoryClass,categoryName,currency,expirationTimestamp,flags,hasImage,heading,id,images,immortal,indexed,language,location,price,postingTimestamp,source,sourceId,sourceUrl'
 def fetch(sourceId=None):
     url = threeTaps
     if(sourceId): url = "%s&sourceId=%s" %(url, sourceId)
@@ -74,10 +79,10 @@ def convert(entry):
     _id =  "post%s%s" % (source, entry['sourceId'])
     p = Post.collection.find_one({'_id': _id})
     if(not p):        
-        p=Post()
+        p=Post(entry)
         if('html' in entry):   del entry['html']            
         p.sourceId = "%s" %(entry['sourceId'])
-        p.fetched = entry
+        #p.fetched = entry
         p.ptm = formatTime( entry['postingTimestamp'] )
         p.ctm = formatTime()
         p._id = _id
@@ -91,7 +96,7 @@ def crawl():
     - Find the latest time stamp
     - Query from that time stamp + 10 minutes, sleep 1 minute
     """
-    start = "2012-10-16 00:00:00"
+    start = "2012-10-01 00:00:00"
     cursor = Post.collection.find({}, {'ptm':1}).sort('ptm', pymongo.DESCENDING).limit(1)
     if(cursor and cursor.count()>0):
         d = cursor[0]
@@ -100,15 +105,19 @@ def crawl():
     else:
         logger.debug("No record, starting from 10/1")  
     logger.info("Requesting posts from %s  " %start)
-    start = formatTime(start, DATE_TIMESTAMP) 
-    end = start + 60 * 60 * 24 # one day      
+    
+    end = dateutil.formatTime(start, dateutil.DATE_TIMESTAMP)
+    end = end +   60 # one minute
+    end = dateutil.formatTime(float(end), dateutil.DATE_SECONDS)
+          
     url = "%s&start=%s&end=%s&" %(threeTaps, start, end)
-    url = threeTaps    
+    #url = threeTaps    
     ret = []
     _fetch(url, ret)
     logger.info("Harvested %s items" %(len(ret)))
      
 """
+annotations,body,category,categoryClass,categoryName,currency,expirationTimestamp,flags,hasImage,heading,id,images,immortal,indexed,language,location,price,postingTimestamp,source,sourceId,sourceUrl
 {
             "accountId": 1,
             "annotations": {

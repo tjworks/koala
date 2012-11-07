@@ -11,7 +11,11 @@ def fetch(**kwargs):
     harvester.fetch(**kwargs)
         
 def crawl(**kwargs):
+    """
+    crawl the 3taps db
+    """
     
+    """
     sc = clients.SearchAPIClient()
     sc.enableLogging()
     q = ObjDict()
@@ -20,6 +24,7 @@ def crawl(**kwargs):
     if(True): 
         print res
         return None
+    """
     reload(harvester)
     harvester.crawl()        
     

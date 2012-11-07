@@ -111,13 +111,12 @@ class SearchAPIClient(APIClient):
 
         postings = []
 
-        for row in results['results']:
-            postings.append(Posting(**row))
+        for row in results['results']: postings.append(Posting(**row))
 
         return {'success'    : True,
                 'numResults' : results['numResults'],
                 'execTimeMs' : results['execTimeMs'],
-                'results'    : postings}
+                'results'    : results['results']}
 
 
     def range(self, query, fields):
