@@ -12,3 +12,5 @@ ENV/
 WIN/
 db.sqlite
 logs/
+.DS_Store
+

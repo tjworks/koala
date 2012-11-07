@@ -1,7 +1,9 @@
 # Django settings for koala project.
-import os,mongoengine
+import os,mongoengine,sys
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__) )
 APP_ENV = os.environ.get('APP_ENV', 'dev')
+sys.path.append(PROJECT_PATH+"/lib") 
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
