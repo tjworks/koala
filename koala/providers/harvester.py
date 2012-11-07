@@ -10,7 +10,7 @@ import uuid
 import pymongo
 
 logger = logging.getLogger(__name__)
-PAGE_SIZE = 100
+PAGE_SIZE = 500
 #threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&rpp=100&metroCode=USA-ATL&heading=MINI Cooper&annotations={source_subcat:cto}'
 threeTaps = 'http://3taps.net/search?authToken=4a207d226ba34e5aab23c022157f29a7&source=CRAIG&categoryClass=SSSS&rpp=1&retvals=annotations,body,category,categoryClass,categoryName,currency,expirationTimestamp,flags,hasImage,heading,id,images,immortal,indexed,language,location,price,postingTimestamp,source,sourceId,sourceUrl'
 def fetch(sourceId=None):
@@ -57,7 +57,7 @@ def _fetch(url, ret):
             logger.debug("This request was all skipped, we must have the data from this point on, abort")
             break        
         logger.debug("Sleeping a little")
-        time.sleep(10)
+        time.sleep(5)
     return ret
 def _load(url):
     logger.debug("Fetching %s" %url)

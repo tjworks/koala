@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os
+import os,time
 import sys
 
 from threetaps.api import clients, base, models
@@ -26,7 +26,10 @@ def crawl(**kwargs):
         return None
     """
     reload(harvester)
-    harvester.crawl()        
+    while(True):
+        harvester.crawl()
+        time.sleep(5)
+                
     
 #we can change this one!
 if __name__ == "__main__":
