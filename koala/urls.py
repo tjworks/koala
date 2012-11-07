@@ -5,17 +5,9 @@ from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    #url(r'^$', 'koala.views.home', name='home'),
 
-    url(r'^api/export/(?P<filename>.*)$', 'graph.converter.handler'),
-        
-    url(r'^api/reference/(?P<action>.*)/(?P<args>.*).ris$', 'inout.views.handler'),
-    
-    url(r'^api/graph/save.json', 'graph.graphview.handler'),
-    
     # graph app
-    url(r'^graph/(?P<precon_id>.*)$', 'graph.graphview.handler'),
+    url('^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
     
     url(r'^pages/(?P<pagename>.*)$', 'koala.views.main.serve'),
     # search/proxy
@@ -25,12 +17,9 @@ urlpatterns = patterns('',
     
     #url(r'^activate/(?P<post_id>.*)$', 'koala.views.adview.activate'),    
     #url(r'^view/(?P<post_id>.*)$', 'koala.views.adview.view'),    
-    
-
-    #url('^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': 'static'}),
-    
+     
     #url(r'^assets/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-    url(r'^(?P<path>.*.(css|js|png|gif|swf|jpg|html|htm|pdf|csv|json))$', 'django.views.static.serve', {'document_root': 'static'}),
+    #url(r'^(?P<path>.*.(css|js|png|gif|swf|jpg|html|htm|pdf|csv|json))$', 'django.views.static.serve', {'document_root': 'static'}),
 
     # url(r'^koala/', include('koala.foo.urls')),
 
@@ -44,8 +33,6 @@ urlpatterns = patterns('',
     url(r'^$', 'koala.views.main.home'),
 
     url(r'^howto$', 'koala.views.home'),
-    # Userena app
-    #url(r'^accounts/', include('userena.urls')),
 )
 
 """
