@@ -1,11 +1,12 @@
 
 from django.views.decorators.http import require_http_methods
 from koala import settings, application
-from koala.models import Post
+from koala.models import Post, Item
+from koala.providers import provider
 from koala.util.parser import parsePhone
 from koala.webutils import getReferer
+from myutil import idtool
 from myutil.objdict import ObjDict
-from koala.providers import provider
 import json
 import logging
 
@@ -28,9 +29,6 @@ def _getPost(req, post_id):
             logger.debug("fetch failed")        
     if(not post):
         raise Exception("No post found for id %s" %post_id)
-    if(not post.fetched):
-        logger.debug("Fetching from source")
-        raise Exception("Post not fetched yet: %s" %post_id)
         
     return post
 
@@ -43,7 +41,7 @@ def _getPostId(req):
     return post_id
   
 def _fillContext(post):
-    fetched = post.fetched
+    fetched = post
     ctx = application.getContext()
     ctx.template = 'howitworks.html'
     ctx.update(fetched)
@@ -58,6 +56,10 @@ def _fillContext(post):
         ctx.default_image = fetched.images[0]
     ctx.phone = ctx.phone or ""
     
+    if('location' in fetched and 'zipCode' in fetched.location):
+        ctx.location = ctx['location'] or {}
+        ctx.location['zipCode'] = fetched.location['zipCode'].replace('USA-', '')
+    
 @require_http_methods(["GET", "POST", "HEAD"])
 def view(req, post_id=None):
     """
@@ -69,24 +71,34 @@ def view(req, post_id=None):
     _fillContext(post)
     ctx = application.getContext()
     ctx.template = 'adview.html'
+    
     return application.renderResponse()
 
 @require_http_methods(["GET", "POST", "HEAD"])
 def edit(req, post_id=None):
     return activate(req, post_id)
+
+
 @require_http_methods(["GET", "POST", "HEAD"])
 def activate(req, post_id=None):
     """
     This handles the case when seller accepts invitation and clicks the link
     """
     post_id = post_id or _getPostId(req)
-    post = _getPost(req, post_id)
+    post = _getPost(req, post_id)    
+    item = Item.collection.find_one({'post_id': post._id})
     
-    post.sellervisits = post.sellervisits+1 if ('sellervisits' in post) else 1
-    post.mongo_update()
-    
+    if(not item):
+        item = Item({'hello':1})
+        item._id = idtool.generate("item")
+        item.post_id = post._id
+        item.save()
+        #post.sellervisits = post.sellervisits+1 if ('sellervisits' in post) else 1
+        #post.mongo_update()
+    item.id = item._id
+    post.update(item)
     _fillContext(post)
     ctx = application.getContext()
     ctx.template = 'adedit.html'
-    
+    ctx.item = item
     return application.renderResponse()

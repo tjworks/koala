@@ -8,7 +8,7 @@ class Post(Model):
         # A connection to your DB is automatically created.
         database = settings.MONGODB_NAME
         collection = "posts"
-	port = settings.MONGODB_PORT
+        port = settings.MONGODB_PORT
         host = settings.MONGODB_HOST
 
         # Now, we programatically declare what indices we want.
@@ -19,8 +19,24 @@ class Post(Model):
             Index("ptm"),
         )
 
-  
+class Item(Model):
+      
+    class Meta:
+        # Here, we specify the database and collection names.
+        # A connection to your DB is automatically created.
+        port = settings.MONGODB_PORT
+        host = settings.MONGODB_HOST
+        database = settings.MONGODB_NAME
+        collection = "items"
         
+        # Now, we programatically declare what indices we want.
+        # The arguments to the Index constructor are identical to
+        # the args to pymongo"s ensure_index function.
+        indices = (
+            Index("_id"),
+            Index("post_id"),
+            Index("seller_id"),
+        )
 class PostTestCase(unittest.TestCase):
     def setUp(self):
         #self.lion = Animal.objects.create(name="lion", sound="roar")

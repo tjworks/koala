@@ -1,7 +1,6 @@
 """
 Database unique ID tool
 """
-from myutil.dateutil import getTime
 import random
 import math
 import time
