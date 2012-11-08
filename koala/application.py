@@ -1,8 +1,10 @@
+from django.http import HttpResponse
+from django.template import loader
+from django.template.context import RequestContext
+from myutil.objdict import ObjDict
+import json
 import logging
 import threading
-from django.http import HttpResponse
-from django.template.context import RequestContext
-from django.template import loader
 
 """
 This module is similar to the ApplicationContext in Spring world. The purpose is we can do some simple caching within the thread 
@@ -52,6 +54,7 @@ def getContext(req=None):
 	appContext.ctx.app = {
 		'name':'Koala'
 	}
+	appContext.request = req
 	return appContext.ctx
 
 def setUser(userObj):
@@ -65,9 +68,32 @@ def clearContext():
 	attributes = [attr for attr in appContext.__dict__]
 	for attr in attributes:
 		delattr(appContext, attr)  
-        
-def renderResponse():
-    #ctx = gf_template.get_context(req, {})
-    ctx = getContext()
-    template = loader.get_template( ctx.template )
-    return HttpResponse(template.render(ctx))
+
+def renderResponse(result=None, template=None):
+	"""
+	Render HttpResonse 
+	
+	
+	"""
+	ctx = getContext()
+	if('template' in ctx): template = ctx.template
+	if(template):
+		templ = loader.get_template( ctx.template )
+		return HttpResponse(templ.render(ctx))
+	else:
+		#if(ctx.request and ctx.request.path_info.find('.json')>0):
+		# Render json format
+		ret = ObjDict()
+		result = result or ''			
+		if (isinstance(result, Exception)):
+			ret.error =  "%s" %result
+		else:
+			ret.result = result
+			ret.message = ""
+			
+		html = json.dumps(ret)
+		mimetype = 'application/json'	
+		return HttpResponse(html, mimetype=mimetype)
+		#super(SmartResponse, self).__init__(obj, mimetype=mimetype, **kw)
+		
+	

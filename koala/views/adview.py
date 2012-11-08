@@ -1,6 +1,10 @@
-
+"""
+koala.view.adview
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
 from django.views.decorators.http import require_http_methods
-from koala import settings, application
+from koala import settings
+from koala.application import renderResponse,getContext
 from koala.models import Post, Item
 from koala.providers import provider
 from koala.util.parser import parsePhone
@@ -9,9 +13,11 @@ from myutil import idtool
 from myutil.objdict import ObjDict
 import json
 import logging
+from koala.managers.ItemManager import ItemManager
 
 logger = logging.getLogger(__name__)
-
+itemManager = ItemManager()
+ 
 def _getPost(req, post_id):
     """
     """    
@@ -42,7 +48,7 @@ def _getPostId(req):
   
 def _fillContext(post):
     fetched = post
-    ctx = application.getContext()
+    ctx = getContext()
     ctx.template = 'howitworks.html'
     ctx.update(fetched)
     
@@ -67,12 +73,12 @@ def view(req, post_id=None):
     """
     post_id = post_id or _getPostId(req)
     post = _getPost(req, post_id)
-    #ctx = application.getContext()
+    #ctx = getContext()
     _fillContext(post)
-    ctx = application.getContext()
+    ctx = getContext()
     ctx.template = 'adview.html'
     
-    return application.renderResponse()
+    return renderResponse()
 
 @require_http_methods(["GET", "POST", "HEAD"])
 def edit(req, post_id=None):
@@ -80,7 +86,25 @@ def edit(req, post_id=None):
 
 @require_http_methods(["GET", "POST", "HEAD"])
 def update(req, item_id=None):
+    """
+    Update item properties. 
     
+    Usage::
+    
+        /<item_id>/update?name=value&name=value
+    
+    Example::
+    
+        /item121107220305425262/update?status=on&price=1990&negotiable=on&location=30303
+        
+    """
+    props = {}
+    for key,val in req.REQUEST.iteritems():
+        if(key.find('_') != 0): 
+            props[key] = val
+    itemManager.update(item_id, props)
+    #ctx = getContext()
+    return renderResponse()
 
 @require_http_methods(["GET", "POST", "HEAD"])
 def activate(req, post_id=None):
@@ -101,7 +125,7 @@ def activate(req, post_id=None):
     item.id = item._id
     post.update(item)
     _fillContext(post)
-    ctx = application.getContext()
+    ctx = getContext()
     ctx.template = 'adedit.html'
     ctx.item = item
-    return application.renderResponse()
+    return renderResponse()

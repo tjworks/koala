@@ -1,6 +1,7 @@
 """This is ItemManager
 """
 from koala.managers.BaseManager import BaseManager
+
 class ItemManager(BaseManager):
     """Manager class for item related functions
     
@@ -15,7 +16,7 @@ class ItemManager(BaseManager):
         """
         pass
     
-    def update(self, item):
+    def update(self, item_id, item):
         """Update item 
         
         
