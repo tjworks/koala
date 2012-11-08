@@ -1,0 +1,37 @@
+.. Koala documentation master file, created by
+   sphinx-quickstart on Thu Nov 08 00:10:53 2012.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Koala Dev Documentation
+=================================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+
+Package koala.managers
+-----------------------
+.. automodule:: koala.managers.BaseManager   
+   :members:
+
+.. automodule:: koala.managers.ItemManager   
+   :members:
+
+.. automodule:: koala.managers.UserManager   
+   :members:
+
+Package koala.views
+-----------------------
+.. automodule:: koala.views.adview
+   :members:
+   
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

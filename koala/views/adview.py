@@ -78,6 +78,9 @@ def view(req, post_id=None):
 def edit(req, post_id=None):
     return activate(req, post_id)
 
+@require_http_methods(["GET", "POST", "HEAD"])
+def update(req, item_id=None):
+    
 
 @require_http_methods(["GET", "POST", "HEAD"])
 def activate(req, post_id=None):

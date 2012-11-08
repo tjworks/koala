@@ -6,3 +6,4 @@ pymongo==2.3
 requests==0.14.1
 simplejson==2.6.2
 wsgiref==0.1.2
+Sphinx==1.1.3

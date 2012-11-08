@@ -6,7 +6,8 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
 
-    # graph app
+    
+    url('^docs/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'docs/_build/html'}),
     url('^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
     
     url(r'^pages/(?P<pagename>.*)$', 'koala.views.main.serve'),
@@ -14,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^(?P<post_id>.*)/edit/?$', 'koala.views.adview.edit'),
     url(r'^(?P<post_id>.*?)/?activate/?$', 'koala.views.adview.activate'),
     url(r'^(?P<post_id>.*?)/?view/?$', 'koala.views.adview.view'),
+    url(r'^(?P<post_id>.*?)/?update/?$', 'koala.views.adview.update'),
     
     #url(r'^activate/(?P<post_id>.*)$', 'koala.views.adview.activate'),    
     #url(r'^view/(?P<post_id>.*)$', 'koala.views.adview.view'),    

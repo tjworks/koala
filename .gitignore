@@ -13,4 +13,5 @@ WIN/
 db.sqlite
 logs/
 .DS_Store
-
+*.DS_Store
+docs/_build/
